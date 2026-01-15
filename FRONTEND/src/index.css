@@ -1,0 +1,728 @@
+/* 1. นำเข้าฟอนต์ Kanit */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap');
+
+:root {
+  /* ใช้ฟอนต์ Kanit เป็นหลัก */
+  font-family: 'Kanit', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: #1f2937;
+  background-color: #f3f4f6;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  /* ⚠️ สำคัญ: ต้องลบ display: flex ของเดิมออก เพื่อไม่ให้หน้า Dashboard พัง */
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+a {
+  font-weight: 500;
+  color: #6f42c1;
+  text-decoration: inherit;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #5a32a3;
+}
+
+/* =========================================
+   UI สำหรับหน้า Login / Register (Auth)
+   ========================================= */
+
+/* กล่องจัดกึ่งกลางหน้าจอ */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f3f4f6;
+}
+
+/* การ์ดสีขาว */
+.auth-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  /* เพิ่ม Animation เล็กน้อยตอนโหลด */
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+/* ฟอร์ม */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Kanit', sans-serif;
+  transition: all 0.2s;
+  box-sizing: border-box; /* สำคัญ: กันกล่องล้น */
+  background-color: #fff;
+  color: #333;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #6f42c1;
+  box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.2);
+}
+
+/* ปุ่มกด */
+.auth-btn {
+  width: 100%;
+  padding: 0.85rem;
+  background: linear-gradient(to right, #6f42c1, #5a32a3);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Kanit', sans-serif;
+  margin-top: 10px;
+}
+
+.auth-btn:hover {
+  background: linear-gradient(to right, #5a32a3, #4a2885);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.auth-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.auth-link {
+  color: #6f42c1;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* ปรับให้ auth-container เรียงของจากบนลงล่าง */
+.auth-container {
+  /* เพิ่มบรรทัดนี้ เพื่อให้หัวข้ออยู่เหนือการ์ด */
+  flex-direction: column; 
+}
+
+/* สไตล์สำหรับหัวข้อใหญ่สุดน่ารัก */
+.main-title {
+  font-size: 3.5rem; /* ขนาดใหญ่สะใจ */
+  font-weight: 800;  /* ตัวหนาพิเศษ */
+  text-align: center;
+  margin: 0 0 2rem 0; /* เว้นระยะห่างด้านล่าง */
+  
+  /* เทคนิคทำตัวหนังสือไล่สี (Gradient Text) */
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a18cd1, #6f42c1);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* เพิ่มเงานุ่มๆ ให้ดูมีมิติ */
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+  
+  /* เพิ่มอนิเมชั่นให้สีขยับได้เล็กน้อย (น่ารักขึ้นไปอีก!) */
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.navbar {
+  background-color: white;
+  padding: 0.8rem 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky; /* ติดอยู่ข้างบนตลอดเวลาเลื่อนลง */
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #6f42c1; /* สีม่วง */
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: color 0.2s;
+  font-size: 0.95rem;
+}
+
+.nav-link:hover {
+  color: #6f42c1;
+}
+
+/* ปุ่มใน Navbar */
+.nav-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #6f42c1;
+  color: #6f42c1;
+}
+
+.btn-outline:hover {
+  background: #6f42c1;
+  color: white;
+}
+
+.btn-primary {
+  background: #6f42c1;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #5a32a3;
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+.btn-danger:hover {
+  background: #c82333;
+}
+
+/* ป้ายจำนวนสินค้าในตะกร้า */
+.cart-badge {
+  background: #dc3545;
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+/* ข้อมูลผู้ใช้ */
+.user-info {
+  margin-right: 10px;
+  color: #333;
+  font-weight: 500;
+}
+
+.dashboard-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.dashboard-subtitle {
+  color: #6b7280;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+/* กล่อง Section ต่างๆ */
+.dashboard-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08); /* เงานุ่มๆ */
+  margin-bottom: 30px;
+  border: 1px solid #f0f0f0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #f3f4f6;
+  padding-bottom: 15px;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ตารางสินค้าใน Dashboard */
+.product-manager-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.manage-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s;
+}
+
+.manage-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.manage-card-img {
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.manage-card-body {
+  padding: 20px;
+}
+
+.manage-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* ปุ่ม Action */
+.btn-edit {
+  flex: 1;
+  padding: 10px;
+  background: #fbbf24; /* สีเหลือง */
+  color: #78350f;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-delete {
+  flex: 1;
+  padding: 10px;
+  background: #fee2e2; /* สีแดงอ่อน */
+  color: #dc2626;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-delete:hover {
+  background: #fecaca;
+}
+
+.cart-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.cart-items {
+  flex: 2; /* กินพื้นที่ 2 ส่วน */
+  min-width: 300px;
+}
+
+.cart-summary {
+  flex: 1; /* กินพื้นที่ 1 ส่วน */
+  min-width: 250px;
+}
+
+/* ตารางรายการสินค้า */
+.cart-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 15px; /* เว้นระยะห่างระหว่างแถว */
+}
+
+.cart-item-row {
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.cart-item-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.cart-item-row td {
+  padding: 15px;
+  vertical-align: middle;
+}
+
+.cart-item-row td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.cart-item-row td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.cart-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #eee;
+}
+
+/* การ์ดสรุปยอดเงิน */
+.summary-card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 100px; /* ให้ลอยตามเวลาเลื่อนจอ */
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: #555;
+  font-size: 1rem;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px dashed #eee;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.btn-checkout {
+  width: 100%;
+  padding: 15px;
+  background: #6f42c1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.2s;
+}
+
+.btn-checkout:hover {
+  background: #5a32a3;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 60px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  width: 100%;
+}
+
+.form-container {
+  max-width: 800px; /* จำกัดความกว้างไม่ให้ฟอร์มกว้างเกินไป */
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.form-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); /* เงาสวยๆ เหมือนหน้าอื่นๆ */
+  border: 1px solid #f0f0f0;
+}
+
+.form-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6f42c1; /* ใช้สีม่วงธีมหลัก */
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  font-family: 'Kanit', sans-serif; /* ให้ฟอนต์เหมือนกันทั้งเว็บ */
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #6f42c1; /* เวลาคลิกให้ขอบเป็นสีม่วง */
+}
+
+textarea.form-control {
+  resize: vertical; /* ให้ยืดหดได้แค่แนวตั้ง */
+  height: 150px;
+}
+
+/* ส่วนอัปโหลดไฟล์ */
+.file-upload-container {
+  border: 2px dashed #6f42c1;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  background: #f9f9ff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.file-upload-container:hover {
+  background: #f0f0ff;
+}
+
+.file-upload-label {
+  display: block;
+  font-size: 1.1rem;
+  color: #6f42c1;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* ปุ่ม Submit */
+.btn-submit {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-submit-primary {
+  background: #6f42c1;
+  color: white;
+}
+
+.btn-submit-primary:hover {
+  background: #5a32a3;
+  transform: translateY(-2px);
+}
+
+.btn-submit-warning {
+  background: #ffc107; /* สีส้มสำหรับการแก้ไข */
+  color: #212529;
+}
+
+.btn-submit-warning:hover {
+  background: #e0a800;
+  transform: translateY(-2px);
+}
+
+/* ตารางสินค้า (Grid) */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* จัดเรียงอัตโนมัติ */
+  gap: 30px; /* ระยะห่างระหว่างกล่อง */
+  padding: 20px 0;
+}
+
+/* การ์ดสินค้าแต่ละใบ */
+.product-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden; /* ไม่ให้ภาพล้นออกนอกกรอบ */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column; /* เรียงเนื้อหาแนวตั้ง */
+}
+
+.product-card:hover {
+  transform: translateY(-5px); /* ลอยขึ้นเมื่อเอาเมาส์ชี้ */
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* รูปภาพสินค้า */
+.product-img {
+  width: 100%;
+  height: 200px; /* ล็อกความสูงให้เท่ากันทุกรูป */
+  object-fit: cover; /* ตัดภาพส่วนเกินออกไม่ให้ภาพเบี้ยว */
+  background: #f9f9f9;
+  border-bottom: 1px solid #eee;
+}
+
+/* กล่องข้อความด้านล่าง */
+.product-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* ให้ยืดเต็มพื้นที่ที่เหลือ */
+}
+
+.product-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.product-info p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  
+  /* ตัดคำถ้ายาวเกิน 2 บรรทัด */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ส่วนล่างสุด (ราคา + ปุ่ม) */
+.product-footer {
+  margin-top: auto; /* ดันส่วนนี้ลงไปติดขอบล่างเสมอ */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #28a745; /* สีเขียว */
+}
+
+/* ปุ่มใส่ตะกร้า */
+.btn-add {
+  background: #6f42c1; /* สีม่วง */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-add:hover {
+  background: #5a32a3;
+  transform: scale(1.05);
+}
