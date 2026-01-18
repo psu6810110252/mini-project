@@ -29,7 +29,7 @@ export default function Shop() {
     setLoading(true);
     try {
       // ✅ ส่ง Query Parameter ?search=... ไปหา Backend
-      const res = await axios.get('http://localhost:3000/products', {
+      const res = await axios.get('http://localhost:3001/products', {
         params: { search: keyword }
       });
       setProducts(res.data);
@@ -110,7 +110,7 @@ export default function Shop() {
         ) : filteredProducts.length > 0 ? (
           filteredProducts.map(product => (
             <div key={product.id} className="product-card">
-              <img src={`http://localhost:3000/uploads/${product.image}`} alt={product.title} className="product-img" />
+              <img src={`http://localhost:3001/uploads/${product.image}`} alt={product.title} className="product-img" />
               <div className="product-info">
                 <h3>{product.title}</h3>
                 <p>{(product.description || '').substring(0, 100)}...</p>

@@ -1,0 +1,40 @@
+/* Category Bar Styling */
+.category-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn-category {
+    padding: 10px 25px;
+    border: 2px solid #e5e7eb;
+    background: white;
+    color: #555;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Kanit', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-category:hover {
+    border-color: #d8b4fe;
+    /* ม่วงอ่อนๆ */
+    background: #fdf4ff;
+    transform: translateY(-2px);
+    color: #6f42c1;
+}
+
+.btn-category.active {
+    background: linear-gradient(135deg, #6f42c1, #8b5cf6);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(111, 66, 193, 0.4);
+    /* เงาสีม่วงฟุ้งๆ */
+    transform: scale(1.05);
+    font-weight: 600;
+}

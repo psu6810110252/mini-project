@@ -26,18 +26,18 @@ function Login() {
     setErrorMessage('');
 
     try {
-      const response = await axios.post('http://localhost:3000/auth/login', formData);
+      const response = await axios.post('http://localhost:3001/auth/login', formData);
 
       const token = response.data.access_token || response.data.token;
-      const user = response.data.user; 
+      const user = response.data.user;
 
       if (!token) throw new Error("ไม่พบ Token");
 
       // 🛠️ Logic เดิม: ปรับ Role ให้เป็นตัวพิมพ์เล็ก และแปลง BUYER -> user
       let role = user?.role ? user.role.toLowerCase() : 'user';
-      if (role === 'buyer') role = 'user'; 
+      if (role === 'buyer') role = 'user';
 
-      const safeUser = { ...user, role }; 
+      const safeUser = { ...user, role };
 
       // บันทึกลง Storage
       localStorage.setItem('token', token);
@@ -54,7 +54,7 @@ function Login() {
       if (safeUser.role === 'admin') {
         navigate('/admin');
       } else if (safeUser.role === 'seller') {
-        navigate('/seller-dashboard'); 
+        navigate('/seller-dashboard');
       } else {
         navigate('/'); // userทั่วไป
       }
@@ -73,7 +73,7 @@ function Login() {
 
   return (
     <div className="auth-container">
-      
+
       {/* 👇👇👇 เพิ่มหัวข้อใหญ่ตรงนี้ 👇👇👇 */}
       <h1 className="main-title">
         Lecture Clubhouse 🏡💖
@@ -83,7 +83,7 @@ function Login() {
         {/* หัวข้อสวยๆ */}
         <h2 className="auth-title">ยินดีต้อนรับกลับ 👋</h2>
         <p className="auth-subtitle">เข้าสู่ระบบเพื่อจัดการร้านค้าและคำสั่งซื้อ</p>
-        
+
         {/* กล่อง Error Message */}
         {errorMessage && (
           <div style={{ backgroundColor: '#fee2e2', color: '#dc2626', padding: '12px', borderRadius: '8px', marginBottom: '20px', textAlign: 'center', fontSize: '0.9rem' }}>
@@ -92,35 +92,35 @@ function Login() {
         )}
 
         <form onSubmit={handleSubmit}>
-          
+
           <div className="form-group">
             <label className="form-label">ชื่อผู้ใช้ (Username)</label>
-            <input 
-              type="text" 
-              name="username" 
+            <input
+              type="text"
+              name="username"
               className="form-input" // ใช้ Class สวยๆ
               placeholder="กรอกชื่อผู้ใช้ของคุณ"
               value={formData.username}
-              onChange={handleChange} 
-              required 
+              onChange={handleChange}
+              required
             />
           </div>
 
           <div className="form-group">
             <label className="form-label">รหัสผ่าน (Password)</label>
-            <input 
-              type="password" 
-              name="password" 
+            <input
+              type="password"
+              name="password"
               className="form-input" // ใช้ Class สวยๆ
               placeholder="••••••••"
               value={formData.password}
-              onChange={handleChange} 
-              required 
+              onChange={handleChange}
+              required
             />
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="auth-btn" // ใช้ Class ปุ่ม Gradient
             disabled={isLoading}
           >

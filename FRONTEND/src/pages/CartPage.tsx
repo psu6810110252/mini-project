@@ -8,19 +8,19 @@ function CartPage() {
 
   const handleCheckout = async () => {
     if (!slipImage) return alert("⚠️ กรุณาแนบสลิปก่อนชำระเงินครับ");
-    
+
     try {
       const token = localStorage.getItem('token');
       const formData = new FormData();
-      
+
       // ส่งสินค้าทั้งตะกร้าเป็น String JSON ไปที่ Backend
       formData.append('items', JSON.stringify(cart));
       formData.append('file', slipImage);
 
-      await axios.post('http://localhost:3000/orders/bulk', formData, {
-        headers: { 
+      await axios.post('http://localhost:3001/orders/bulk', formData, {
+        headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data' 
+          'Content-Type': 'multipart/form-data'
         }
       });
 

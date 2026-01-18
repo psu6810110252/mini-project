@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build Outputs
+dist/
+build/
+*.js
+*.d.ts
+*.map
+
+# Environment Variables
+.env
+.env.*
+
+# OS Files
+.DS_Store
+Thumbs.db

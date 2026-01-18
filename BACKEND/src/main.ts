@@ -9,11 +9,10 @@ async function bootstrap() {
 
   app.enableCors();
 
-  // 4. บรรทัดสำคัญ! บอกให้ Server ยอมให้คนเข้าถึงไฟล์ในโฟลเดอร์ uploads ได้
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
-    prefix: '/uploads/',
-  });
 
-  await app.listen(3000);
+
+
+
+  await app.listen(3001);
 }
 bootstrap();

@@ -30,6 +30,7 @@ a {
   text-decoration: inherit;
   transition: color 0.2s;
 }
+
 a:hover {
   color: #5a32a3;
 }
@@ -61,8 +62,15 @@ a:hover {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .auth-title {
@@ -102,7 +110,8 @@ a:hover {
   font-size: 1rem;
   font-family: 'Kanit', sans-serif;
   transition: all 0.2s;
-  box-sizing: border-box; /* สำคัญ: กันกล่องล้น */
+  box-sizing: border-box;
+  /* สำคัญ: กันกล่องล้น */
   background-color: #fff;
   color: #333;
 }
@@ -161,43 +170,55 @@ a:hover {
 /* ปรับให้ auth-container เรียงของจากบนลงล่าง */
 .auth-container {
   /* เพิ่มบรรทัดนี้ เพื่อให้หัวข้ออยู่เหนือการ์ด */
-  flex-direction: column; 
+  flex-direction: column;
 }
 
 /* สไตล์สำหรับหัวข้อใหญ่สุดน่ารัก */
 .main-title {
-  font-size: 3.5rem; /* ขนาดใหญ่สะใจ */
-  font-weight: 800;  /* ตัวหนาพิเศษ */
+  font-size: 3.5rem;
+  /* ขนาดใหญ่สะใจ */
+  font-weight: 800;
+  /* ตัวหนาพิเศษ */
   text-align: center;
-  margin: 0 0 2rem 0; /* เว้นระยะห่างด้านล่าง */
-  
+  margin: 0 0 2rem 0;
+  /* เว้นระยะห่างด้านล่าง */
+
   /* เทคนิคทำตัวหนังสือไล่สี (Gradient Text) */
   background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a18cd1, #6f42c1);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  
+
   /* เพิ่มเงานุ่มๆ ให้ดูมีมิติ */
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
-  
+
   /* เพิ่มอนิเมชั่นให้สีขยับได้เล็กน้อย (น่ารักขึ้นไปอีก!) */
   animation: gradientShift 8s ease infinite;
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .navbar {
   background-color: white;
   padding: 0.8rem 2rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky; /* ติดอยู่ข้างบนตลอดเวลาเลื่อนลง */
+  position: sticky;
+  /* ติดอยู่ข้างบนตลอดเวลาเลื่อนลง */
   top: 0;
   z-index: 1000;
 }
@@ -205,7 +226,8 @@ a:hover {
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #6f42c1; /* สีม่วง */
+  color: #6f42c1;
+  /* สีม่วง */
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -267,6 +289,7 @@ a:hover {
   background: #dc3545;
   color: white;
 }
+
 .btn-danger:hover {
   background: #c82333;
 }
@@ -318,7 +341,8 @@ a:hover {
   background: white;
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08); /* เงานุ่มๆ */
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  /* เงานุ่มๆ */
   margin-bottom: 30px;
   border: 1px solid #f0f0f0;
 }
@@ -342,30 +366,36 @@ a:hover {
 }
 
 /* ตารางสินค้าใน Dashboard */
+/* ตารางสินค้าใน Dashboard */
 .product-manager-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
 }
 
 .manage-card {
   background: white;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  /* ปรับเงาให้เท่าหน้า Shop */
+  border: 1px solid #f0f0f0;
   transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
 .manage-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .manage-card-img {
-  height: 180px;
+  height: 200px;
+  /* ปรับสูงเท่าหน้า Shop */
   width: 100%;
   object-fit: cover;
+  border-bottom: 1px solid #eee;
 }
 
 .manage-card-body {
@@ -382,7 +412,8 @@ a:hover {
 .btn-edit {
   flex: 1;
   padding: 10px;
-  background: #fbbf24; /* สีเหลือง */
+  background: #fbbf24;
+  /* สีเหลือง */
   color: #78350f;
   border: none;
   border-radius: 8px;
@@ -395,13 +426,15 @@ a:hover {
 .btn-delete {
   flex: 1;
   padding: 10px;
-  background: #fee2e2; /* สีแดงอ่อน */
+  background: #fee2e2;
+  /* สีแดงอ่อน */
   color: #dc2626;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
 }
+
 .btn-delete:hover {
   background: #fecaca;
 }
@@ -416,12 +449,14 @@ a:hover {
 }
 
 .cart-items {
-  flex: 2; /* กินพื้นที่ 2 ส่วน */
+  flex: 2;
+  /* กินพื้นที่ 2 ส่วน */
   min-width: 300px;
 }
 
 .cart-summary {
-  flex: 1; /* กินพื้นที่ 1 ส่วน */
+  flex: 1;
+  /* กินพื้นที่ 1 ส่วน */
   min-width: 250px;
 }
 
@@ -429,18 +464,19 @@ a:hover {
 .cart-table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 15px; /* เว้นระยะห่างระหว่างแถว */
+  border-spacing: 0 15px;
+  /* เว้นระยะห่างระหว่างแถว */
 }
 
 .cart-item-row {
   background: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s;
 }
 
 .cart-item-row:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .cart-item-row td {
@@ -471,9 +507,10 @@ a:hover {
   background: white;
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   position: sticky;
-  top: 100px; /* ให้ลอยตามเวลาเลื่อนจอ */
+  top: 100px;
+  /* ให้ลอยตามเวลาเลื่อนจอ */
 }
 
 .summary-row {
@@ -518,12 +555,13 @@ a:hover {
   padding: 60px;
   background: white;
   border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   width: 100%;
 }
 
 .form-container {
-  max-width: 800px; /* จำกัดความกว้างไม่ให้ฟอร์มกว้างเกินไป */
+  max-width: 800px;
+  /* จำกัดความกว้างไม่ให้ฟอร์มกว้างเกินไป */
   margin: 40px auto;
   padding: 0 20px;
 }
@@ -532,7 +570,8 @@ a:hover {
   background: white;
   border-radius: 20px;
   padding: 40px;
-  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); /* เงาสวยๆ เหมือนหน้าอื่นๆ */
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+  /* เงาสวยๆ เหมือนหน้าอื่นๆ */
   border: 1px solid #f0f0f0;
 }
 
@@ -540,7 +579,8 @@ a:hover {
   text-align: center;
   font-size: 2rem;
   font-weight: 700;
-  color: #6f42c1; /* ใช้สีม่วงธีมหลัก */
+  color: #6f42c1;
+  /* ใช้สีม่วงธีมหลัก */
   margin-bottom: 30px;
 }
 
@@ -563,16 +603,19 @@ a:hover {
   border-radius: 10px;
   font-size: 1rem;
   transition: border-color 0.3s;
-  font-family: 'Kanit', sans-serif; /* ให้ฟอนต์เหมือนกันทั้งเว็บ */
+  font-family: 'Kanit', sans-serif;
+  /* ให้ฟอนต์เหมือนกันทั้งเว็บ */
 }
 
 .form-control:focus {
   outline: none;
-  border-color: #6f42c1; /* เวลาคลิกให้ขอบเป็นสีม่วง */
+  border-color: #6f42c1;
+  /* เวลาคลิกให้ขอบเป็นสีม่วง */
 }
 
 textarea.form-control {
-  resize: vertical; /* ให้ยืดหดได้แค่แนวตั้ง */
+  resize: vertical;
+  /* ให้ยืดหดได้แค่แนวตั้ง */
   height: 150px;
 }
 
@@ -622,7 +665,8 @@ textarea.form-control {
 }
 
 .btn-submit-warning {
-  background: #ffc107; /* สีส้มสำหรับการแก้ไข */
+  background: #ffc107;
+  /* สีส้มสำหรับการแก้ไข */
   color: #212529;
 }
 
@@ -634,8 +678,10 @@ textarea.form-control {
 /* ตารางสินค้า (Grid) */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* จัดเรียงอัตโนมัติ */
-  gap: 30px; /* ระยะห่างระหว่างกล่อง */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  /* จัดเรียงอัตโนมัติ */
+  gap: 30px;
+  /* ระยะห่างระหว่างกล่อง */
   padding: 20px 0;
 }
 
@@ -643,24 +689,29 @@ textarea.form-control {
 .product-card {
   background: white;
   border-radius: 15px;
-  overflow: hidden; /* ไม่ให้ภาพล้นออกนอกกรอบ */
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  overflow: hidden;
+  /* ไม่ให้ภาพล้นออกนอกกรอบ */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   border: 1px solid #f0f0f0;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
-  flex-direction: column; /* เรียงเนื้อหาแนวตั้ง */
+  flex-direction: column;
+  /* เรียงเนื้อหาแนวตั้ง */
 }
 
 .product-card:hover {
-  transform: translateY(-5px); /* ลอยขึ้นเมื่อเอาเมาส์ชี้ */
-  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  transform: translateY(-5px);
+  /* ลอยขึ้นเมื่อเอาเมาส์ชี้ */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* รูปภาพสินค้า */
 .product-img {
   width: 100%;
-  height: 200px; /* ล็อกความสูงให้เท่ากันทุกรูป */
-  object-fit: cover; /* ตัดภาพส่วนเกินออกไม่ให้ภาพเบี้ยว */
+  height: 200px;
+  /* ล็อกความสูงให้เท่ากันทุกรูป */
+  object-fit: cover;
+  /* ตัดภาพส่วนเกินออกไม่ให้ภาพเบี้ยว */
   background: #f9f9f9;
   border-bottom: 1px solid #eee;
 }
@@ -670,7 +721,8 @@ textarea.form-control {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* ให้ยืดเต็มพื้นที่ที่เหลือ */
+  flex-grow: 1;
+  /* ให้ยืดเต็มพื้นที่ที่เหลือ */
 }
 
 .product-info h3 {
@@ -685,7 +737,7 @@ textarea.form-control {
   font-size: 0.95rem;
   line-height: 1.5;
   margin-bottom: 20px;
-  
+
   /* ตัดคำถ้ายาวเกิน 2 บรรทัด */
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -695,7 +747,8 @@ textarea.form-control {
 
 /* ส่วนล่างสุด (ราคา + ปุ่ม) */
 .product-footer {
-  margin-top: auto; /* ดันส่วนนี้ลงไปติดขอบล่างเสมอ */
+  margin-top: auto;
+  /* ดันส่วนนี้ลงไปติดขอบล่างเสมอ */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -704,12 +757,14 @@ textarea.form-control {
 .price {
   font-size: 1.4rem;
   font-weight: 800;
-  color: #28a745; /* สีเขียว */
+  color: #28a745;
+  /* สีเขียว */
 }
 
 /* ปุ่มใส่ตะกร้า */
 .btn-add {
-  background: #6f42c1; /* สีม่วง */
+  background: #6f42c1;
+  /* สีม่วง */
   color: white;
   border: none;
   padding: 10px 20px;
@@ -725,4 +780,45 @@ textarea.form-control {
 .btn-add:hover {
   background: #5a32a3;
   transform: scale(1.05);
+}
+
+/* Category Bar Styling */
+.category-bar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.btn-category {
+  padding: 10px 25px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  color: #555;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Kanit', sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-category:hover {
+  border-color: #d8b4fe;
+  /* ม่วงอ่อนๆ */
+  background: #fdf4ff;
+  transform: translateY(-2px);
+  color: #6f42c1;
+}
+
+.btn-category.active {
+  background: linear-gradient(135deg, #6f42c1, #8b5cf6);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(111, 66, 193, 0.4);
+  /* เงาสีม่วงฟุ้งๆ */
+  transform: scale(1.05);
+  font-weight: 600;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm'; 
+import { Repository, DataSource } from 'typeorm';
 import { Order } from './order.entity';
 import { OrderItem } from './order-item.entity';
 import { Product } from '../products/entities/product.entity';
@@ -13,7 +13,7 @@ export class OrdersService {
     @InjectRepository(OrderItem) private orderItemsRepository: Repository<OrderItem>,
     @InjectRepository(Product) private productsRepository: Repository<Product>,
     private dataSource: DataSource, // สำหรับทำ Transaction
-  ) {}
+  ) { }
 
   // ฟังก์ชันเดิมสำหรับการซื้อทีละชิ้น (เก็บไว้เผื่อใช้)
   async create(userId: number, productId: number, slipImage?: string) {
@@ -50,10 +50,10 @@ export class OrdersService {
       const order = new Order();
       order.user = { id: userId } as any;
       order.status = 'PENDING';
-      
+
       // คำนวณราคาทั้งตะกร้า
       order.totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      
+
       if (slipImage) order.slipImage = slipImage;
 
       // Save Order
@@ -71,7 +71,7 @@ export class OrdersService {
 
       // Save Items
       await queryRunner.manager.save(OrderItem, orderItems);
-      
+
       // ยืนยัน Transaction
       await queryRunner.commitTransaction();
 
@@ -106,33 +106,33 @@ export class OrdersService {
       });
 
       if (!order) throw new Error('ไม่พบออเดอร์');
-      if (order.status === 'APPROVED') throw new Error('ออเดอร์นี้ถูกอนุมัติไปแล้ว');
+      if (order.status === 'PAID') throw new Error('ออเดอร์นี้ถูกอนุมัติไปแล้ว');
 
-      // 2. อัปเดตสถานะออเดอร์เป็น APPROVED
-      order.status = 'APPROVED';
+      // 2. อัปเดตสถานะออเดอร์เป็น PAID
+      order.status = 'PAID';
       await queryRunner.manager.save(order);
 
       // 3. 🚀 Logic สร้างข้อมูล Payout (หัก 5%)
       for (const item of order.orderItems) {
         // เช็คก่อนว่าสินค้านี้มีคนขายหรือไม่
         if (item.product && item.product.user) {
-            const payout = new Payout();
-            
-            // คำนวณราคารวมของ item นั้น (เผื่อ quantity > 1)
-            const totalItemPrice = Number(item.price) * item.quantity;
-            
-            // คำนวณยอดที่จะหัก 5%
-            const adminFee = totalItemPrice * 0.05;
-            const sellerReceive = totalItemPrice - adminFee;
+          const payout = new Payout();
 
-            payout.amount = sellerReceive; // ยอดเงินสุทธิที่คนขายจะได้รับ (95%)
-            payout.seller = item.product.user; // ระบุคนขายที่จะได้รับเงิน
-            payout.order = order;
-            
-            // ✅ แก้ไขตรงนี้: เปลี่ยนเป็น PAID ทันที เพื่อให้ Seller เห็นว่าเงินเข้าแล้ว
-            payout.status = 'PAID'; 
-            
-            await queryRunner.manager.save(payout);
+          // คำนวณราคารวมของ item นั้น (เผื่อ quantity > 1)
+          const totalItemPrice = Number(item.price) * item.quantity;
+
+          // คำนวณยอดที่จะหัก 5%
+          const adminFee = totalItemPrice * 0.05;
+          const sellerReceive = totalItemPrice - adminFee;
+
+          payout.amount = sellerReceive; // ยอดเงินสุทธิที่คนขายจะได้รับ (95%)
+          payout.seller = item.product.user; // ระบุคนขายที่จะได้รับเงิน
+          payout.order = order;
+
+          // ✅ แก้ไขตรงนี้: เปลี่ยนเป็น PAID ทันที เพื่อให้ Seller เห็นว่าเงินเข้าแล้ว
+          payout.status = 'PAID';
+
+          await queryRunner.manager.save(payout);
         }
       }
 
@@ -152,32 +152,90 @@ export class OrdersService {
   // 🔥 ฟังก์ชันสำหรับดึงข้อมูลรายได้ของผู้ขาย (Seller Dashboard)
   async getMyPayouts(sellerId: number) {
     return this.dataSource.getRepository(Payout).find({
-        where: { seller: { id: sellerId } },
-        relations: ['order', 'order.user'], 
-        order: { createdAt: 'DESC' }
+      where: { seller: { id: sellerId } },
+      relations: ['order', 'order.user'],
+      order: { createdAt: 'DESC' }
     });
   }
 
+  // 🔥 ฟังก์ชันสำหรับดูยอดขาย/รายได้ (Income)
+  async getMyIncome(sellerId: number) {
+    // 1. ดึงข้อมูล Payout ของ User นี้
+    const payouts = await this.dataSource.getRepository(Payout).find({
+      where: { seller: { id: sellerId } },
+      relations: ['order', 'order.orderItems', 'order.orderItems.product', 'order.orderItems.product.user'],
+      order: { createdAt: 'DESC' }
+    });
+
+    // 2. คำนวณยอดเงินรวม (เฉพาะที่ PAID)
+    const totalIncome = payouts
+      .filter(p => p.status === 'PAID')
+      .reduce((sum, p) => sum + Number(p.amount), 0);
+
+    // 3. แปลงข้อมูลสำหรับแสดงผล (soldItems)
+    const soldItems = payouts.map(p => {
+      const order = p.order;
+      // หา Product ของ Seller คนนี้ใน Order นั้น (เพื่อเอาชื่อมาแสดง)
+      const sellerItems = order.orderItems.filter(item => item.product?.user?.id === sellerId);
+      const productNames = sellerItems.map(i => i.product.title).join(', ');
+
+      const net = Number(p.amount);
+      const full = net / 0.95; // คำนวณราคากลับจากยอดสุทธิ
+      const fee = full - net;
+
+      return {
+        id: p.id,
+        createdAt: p.createdAt,
+        orderId: order.id,
+        productName: productNames || 'สินค้า (Deleted)',
+        price: full,
+        fee: fee,
+        netPrice: net,
+        status: p.status
+      };
+    });
+
+    return { totalIncome, soldItems };
+  }
+
   // ใน orders.service.ts
-findAll(userId?: number) { // อาจจะต้องแก้ signature เดิม
-   if (userId) {
+  findAll(userId?: number) { // อาจจะต้องแก้ signature เดิม
+    if (userId) {
       // logic เดิมสำหรับ findMyOrders
       return this.ordersRepository.find({
-         where: { user: { id: userId } },
-         relations: ['orderItems', 'orderItems.product'],
-         order: { createdAt: 'DESC' }
+        where: { user: { id: userId } },
+        relations: ['orderItems', 'orderItems.product'],
+        order: { createdAt: 'DESC' }
       });
-   }
-   // logic ใหม่สำหรับ Admin (ดึงทั้งหมด)
-   return this.ordersRepository.find({
+    }
+    // logic ใหม่สำหรับ Admin (ดึงทั้งหมด)
+    return this.ordersRepository.find({
       relations: ['user', 'orderItems', 'orderItems.product'],
       order: { createdAt: 'DESC' },
-   });
-}
+    });
+  }
 
-// 👇 เพิ่มฟังก์ชันนี้เข้าไปครับ (ต่อจาก approve อันเดิมก็ได้)
+  // 👇 เพิ่มฟังก์ชันนี้เข้าไปครับ (ต่อจาก approve อันเดิมก็ได้)
   async updateStatus(id: number, status: string) {
     // อัปเดตสถานะตามที่ส่งมา (PAID หรือ CANCELLED)
     return this.ordersRepository.update(id, { status: status });
+  }
+
+  // 🔥 ฟังก์ชันดึงรายได้ Admin (5% จากยอดขายทั้งหมดที่ PAID)
+  async getAdminRevenue() {
+    // 1. ดึง Payout ทั้งหมดที่เป็นสถานะ PAID
+    const payouts = await this.dataSource.getRepository(Payout).find({
+      where: { status: 'PAID' }
+    });
+
+    // 2. คำนวณยอด 5% กลับมาจากยอด 95% ที่โอนให้คนขาย
+    const totalRevenue = payouts.reduce((sum, p) => {
+      const sellerReceive = Number(p.amount);
+      const fullPrice = sellerReceive / 0.95; // เทียบกลับเป็น 100%
+      const adminFee = fullPrice - sellerReceive; // ส่วนต่างคือ 5%
+      return sum + adminFee;
+    }, 0);
+
+    return { totalRevenue };
   }
 }
