@@ -10,7 +10,6 @@ function SellerDashboard() {
 
   const [myProducts, setMyProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-
   // State สำหรับบัญชีธนาคาร
   const [bankInfo, setBankInfo] = useState({ bankName: '', bankAccountNumber: '' });
   const [isEditingBank, setIsEditingBank] = useState(false);
@@ -21,7 +20,6 @@ function SellerDashboard() {
   // คำนวณยอดเงิน
   const [serverTotalIncome, setServerTotalIncome] = useState(0);
   const [soldItems, setSoldItems] = useState<SoldItem[]>([]); // ✅ ใช้ Type SoldItem แทน any
-
   // 1. โหลดข้อมูลจริงจาก API
   useEffect(() => {
     const fetchData = async () => {
@@ -94,7 +92,6 @@ function SellerDashboard() {
 
   return (
     <div className="dashboard-container">
-
       {/* --- Header (เอาปุ่มออกแล้ว) --- */}
       <div className="dashboard-header">
         <h1 className="dashboard-title">🛠️ แผงควบคุมผู้ขาย</h1>

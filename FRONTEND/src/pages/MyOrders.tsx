@@ -43,6 +43,7 @@ export default function MyOrders() {
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
 
+
       {/* Header */}
       <div style={{ borderBottom: '1px solid #eee', paddingBottom: '10px', marginBottom: '20px' }}>
         <h1 style={{ margin: 0 }}>📦 ประวัติการสั่งซื้อของฉัน</h1>
@@ -54,6 +55,7 @@ export default function MyOrders() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {orders.map((order) => (
             <div key={order.id} style={{ border: '1px solid #ddd', borderRadius: '10px', padding: '15px', background: 'white', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+
 
               {/* ส่วนหัวของ Order */}
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eee', paddingBottom: '10px', marginBottom: '10px' }}>
@@ -93,6 +95,7 @@ export default function MyOrders() {
                         <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>📚</div>
                       )}
                     </div>
+
 
                     {/* รายละเอียด */}
                     <div style={{ flex: 1 }}>

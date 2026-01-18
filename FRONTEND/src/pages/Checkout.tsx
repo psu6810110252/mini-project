@@ -36,6 +36,7 @@ export default function Checkout() {
       const token = localStorage.getItem('token');
       const formData = new FormData();
 
+
       // ส่งข้อมูลรายการสินค้า
       formData.append('items', JSON.stringify(cart));
       // ส่งไฟล์สลิป
@@ -76,6 +77,7 @@ export default function Checkout() {
         </div>
       ) : (
         <div className="cart-container">
+
 
           {/* --- ฝั่งซ้าย: รายการสินค้า --- */}
           <div className="cart-items">
@@ -118,6 +120,7 @@ export default function Checkout() {
           <div className="cart-summary">
             <div className="summary-card">
               <h3 style={{ marginTop: 0 }}>สรุปคำสั่งซื้อ</h3>
+
 
               <div className="summary-total">
                 <span>ยอดรวมสุทธิ</span>

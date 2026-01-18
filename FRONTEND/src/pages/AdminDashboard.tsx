@@ -4,8 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import type { Order } from '../types'; // ✅ Import จากกลาง
 
-
 export default function AdminDashboard() {
+
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'PENDING' | 'ALL'>('PENDING');
@@ -14,7 +14,6 @@ export default function AdminDashboard() {
 
   // ✅ State สำหรับเก็บรายได้ Admin
   const [platformRevenue, setPlatformRevenue] = useState(0);
-
   // ดึงข้อมูลคำสั่งซื้อทั้งหมด
   const fetchOrders = async () => {
     try {
@@ -28,7 +27,6 @@ export default function AdminDashboard() {
       // ✅ ดึงรายได้ Admin (5% Fee)
       const resRevenue = await axios.get('http://localhost:3001/orders/admin/revenue', authHeader);
       setPlatformRevenue(resRevenue.data.totalRevenue);
-
     } catch (error) {
       console.error("Error fetching orders:", error);
     } finally {
@@ -72,7 +70,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="dashboard-container">
-
       <div className="dashboard-header">
         <h1 className="dashboard-title">👮‍♂️ Admin Center</h1>
         <p className="dashboard-subtitle">ตรวจสอบสลิปและอนุมัติคำสั่งซื้อ</p>
@@ -124,7 +121,6 @@ export default function AdminDashboard() {
         <div style={{ display: 'grid', gap: '20px' }}>
           {filteredOrders.map(order => (
             <div key={order.id} className="dashboard-card" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-
               {/* ส่วนที่ 1: ข้อมูลสลิป */}
               <div style={{ flex: '1', minWidth: '250px', textAlign: 'center', background: '#f9f9f9', padding: '15px', borderRadius: '10px' }}>
                 <h4 style={{ margin: '0 0 10px 0', color: '#555' }}>หลักฐานการโอน</h4>
@@ -157,11 +153,9 @@ export default function AdminDashboard() {
                       {order.status || 'UNKNOWN'}
                     </span>
                   </div>
-
                   {/* ✅ ป้องกัน Error: User undefined */}
                   <p style={{ margin: '5px 0' }}>👤 <b>ลูกค้า:</b> {order.user?.username || 'Unknown User'}</p>
                   <p style={{ margin: '5px 0' }}>📅 <b>วันที่:</b> {order.createdAt ? new Date(order.createdAt).toLocaleString('th-TH') : '-'}</p>
-
                   <div style={{ marginTop: '15px', padding: '10px', background: '#f1f1f1', borderRadius: '8px' }}>
                     <strong>รายการสินค้า:</strong>
                     <ul style={{ margin: '5px 0 0 20px', padding: 0, color: '#555' }}>
